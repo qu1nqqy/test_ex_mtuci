@@ -1,8 +1,10 @@
-from .schemas import UserLoggin, UserRegistration
-from .router import router
+from src.users.schemas import UserLoggin, UserRegistration
+from src.users.router import router
+from src.users.models import User
 
 __all__ = [
     'UserLoggin',
     'UserRegistration',
-    'router'
+    'router',
+    'User',
 ]

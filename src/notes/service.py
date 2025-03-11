@@ -1,8 +1,9 @@
 from fastapi import HTTPException, status
 
-from src.storage import session
-from src.core import User, Note
-from . import NewNote, UpdateNote
+from src.database import session
+from src.users import User
+from src.notes.schemas import NewNote, UpdateNote
+from src.notes.models import Note
 from datetime import datetime
 from src.authdata import actual_user
 
@@ -65,7 +66,6 @@ def update_note(updated_note: UpdateNote):
     return {'Updated note': session.get(Note, updated_note.OldNoteID)}
 
 
-
 def delete_note(note_id: int):
     if actual_user.__int__() == 0:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='You need log in or register to check '
@@ -77,3 +77,24 @@ def delete_note(note_id: int):
     session.delete(note)
     session.commit()
     return {'message': 'Note successfully deleted!'}
+
+
+def check_note(note_id: int):
+    if actual_user.__int__() == 0:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='You need log in or register to check '
+                            'notes')
+    user = session.query(User).filter(User.id == actual_user.__int__()).first()
+
+    try:
+        note = session.query(Note).filter(Note.id == note_id).first()
+    except HTTPException:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Note with this ID does not exist')
+
+    if user.Role == 'Teacher' and note.Checked == False:
+        note.Checked = True
+        session.commit()
+        return {'message': 'Note successfully checked!'}
+    elif user.Role == 'Teacher' and note.Checked == True:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='This note already checked')
+    else:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='You are not allowed to do so')

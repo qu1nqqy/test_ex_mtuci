@@ -1,9 +1,8 @@
 from fastapi import HTTPException, status
-
 from .schemas import UserLoggin, UserRegistration
 from src.authdata import actual_user
-from src.storage import session
-from src.core import User
+from src.database import session
+from src.users.models import User
 
 
 def loggin(user: UserLoggin):

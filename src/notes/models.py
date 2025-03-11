@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
-
-from .base import Base
+from src.database import Base
 
 
 class Note(Base):

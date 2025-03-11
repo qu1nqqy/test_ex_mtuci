@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from . import getstat
+from src.statistics import service
 
 router = APIRouter(
     prefix='/stat',
@@ -9,9 +9,9 @@ router = APIRouter(
 
 @router.get('/all')
 def stat_all():
-    return getstat.stat_all()
+    return service.stat_all()
 
 
 @router.get('/{user_id}')
 def stat_one(user_id: int):
-    return getstat.stat_one(user_id=user_id)
+    return service.stat_one(user_id=user_id)

@@ -1,8 +1,10 @@
-from .schemas import NewNote, UpdateNote
-from .router import router
+from src.notes.schemas import NewNote, UpdateNote
+from src.notes.router import router
+from src.notes.models import Note
 
 __all__ = [
     'NewNote',
     'UpdateNote',
-    'router'
+    'router',
+    "Note",
 ]

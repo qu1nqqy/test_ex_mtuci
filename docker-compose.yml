@@ -1,0 +1,9 @@
+services:
+    backend:
+        container_name: lab1_ref
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8000:8000

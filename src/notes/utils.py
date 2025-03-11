@@ -1,7 +1,8 @@
 from fastapi import HTTPException, status
 
-from src.storage import session
-from src.core import User, Note
+from src.database import session
+from src.users import User
+from src.notes.models import Note
 from src.authdata import actual_user
 
 

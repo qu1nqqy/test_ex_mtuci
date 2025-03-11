@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 
 from src.authdata import actual_user
-from src.core import Note
-from src.storage import session
+from src.notes import Note
+from src.database import session
 
 
 def stat_all():

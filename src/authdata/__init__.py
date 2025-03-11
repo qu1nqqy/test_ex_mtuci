@@ -1,4 +1,4 @@
-from .utils import actual_user
+from .service import actual_user
 
 __all__ = [
     'actual_user'
